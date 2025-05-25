@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "486777914466",
+    "firebase_url": "https://cinemania-1f350-default-rtdb.firebaseio.com",
+    "project_id": "cinemania-1f350",
+    "storage_bucket": "cinemania-1f350.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486777914466:android:2124742b716dbe5f483d3b",
+        "android_client_info": {
+          "package_name": "com.example.cinemania"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOIbk1_mdE6ROECpV90WDyZadANUOImek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
