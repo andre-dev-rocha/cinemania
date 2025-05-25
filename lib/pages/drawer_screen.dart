@@ -1,28 +1,23 @@
-import 'package:cinemania/pages/login_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cinemania/pages/users_screen.dart';
 import 'package:cinemania/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:cinemania/services/users_service.dart';
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
-
   @override
   State<DrawerScreen> createState() => _DrawerScreenState();
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
-  Future<Map<String, dynamic>?> dadosUsuario(String uid) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance.collection('usuarios').doc(uid).get();
-
-    return snapshot.data();
-  }
-
-
+  final UsersService _usersService = UsersService();
+  
+  
+  String nome = "";
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: MediaQuery.of(context).size.width * 0.75,
       child: Column(
         children: [
           UserAccountsDrawerHeader(
@@ -37,18 +32,57 @@ class _DrawerScreenState extends State<DrawerScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(24),
-            child: Row(
-              children: [
-                Expanded(flex: 1, child: Container()),
-                Expanded(
-                  flex: 5,
-                  child: GestureDetector(
-                    child: Text("Sair do App", style: TextStyle()),
-                    onTap: () => context.read<AuthService>().logout(),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: GestureDetector(
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UsersScreen()),
                   ),
-                ),
-              ],
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Icon(Icons.people, color: Colors.green, size: 30),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      "Usuarios",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: GestureDetector(
+              onTap: () => context.read<AuthService>().logout(),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Icon(Icons.logout, color: Colors.red, size: 30),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      "Sair do App",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

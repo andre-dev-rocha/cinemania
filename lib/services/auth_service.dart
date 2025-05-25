@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class AuthException implements Exception {
@@ -10,6 +10,7 @@ class AuthException implements Exception {
 
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref();
 
   User? usuario;
 
@@ -24,7 +25,8 @@ class AuthService extends ChangeNotifier {
       usuario = (user == null) ? null : user;
       isLoading = false;
       notifyListeners();
-    });
+    }
+    );
   }
 
   _getUser() {
@@ -55,10 +57,12 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> _salvarUsuario(String uid, String nome, String email) async {
-    await FirebaseFirestore.instance.collection('usuarios').doc(uid).set({
+    await _dbRef.child("usuarios").child(uid).set({
+      'id': uid,
       'nome': nome,
-      'email': email,
-    });
+      'email': email
+    }
+    );
   }
 
   Future<void> login(String email, String senha) async {

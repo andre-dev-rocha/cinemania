@@ -6,10 +6,10 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final email = TextEditingController();
   final senha = TextEditingController();
   final nome = TextEditingController();
