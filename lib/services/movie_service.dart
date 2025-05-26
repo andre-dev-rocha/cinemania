@@ -7,7 +7,7 @@ class MovieService {
   Future<List<Movie>> getFilmes({int pagina = 1}) async {
     String url =
         '$baseUrl/movie/popular?api_key=$apiKey&page=$pagina&language=pt-BR';
-
+        
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -25,9 +25,8 @@ class MovieService {
     }
   }
 
-  
-  static String getImageUrl(String posterPath){
-    if(posterPath.isEmpty) return '';
+  static String getImageUrl(String posterPath) {
+    if (posterPath.isEmpty) return '';
     return "$baseImageMovie$posterPath";
   }
 }

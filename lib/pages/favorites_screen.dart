@@ -63,7 +63,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       await removeFavorite(movie.id);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('${movie.title} removido dos favoritos.', ),
+                          content: Text(
+                            '${movie.title} removido dos favoritos.',
+                          ),
                         ),
                       );
                     },

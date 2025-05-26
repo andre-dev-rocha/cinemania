@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Text(
                   titulo,
-                  style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: Colors.white,fontSize: 35, fontWeight: FontWeight.bold),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(24),

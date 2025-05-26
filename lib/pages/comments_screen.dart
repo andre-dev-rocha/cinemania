@@ -30,7 +30,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Meus Comentários')),
+      appBar: AppBar(title: const Text('Meus Comentários', style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold))),
       body: FutureBuilder<List<String>>(
         future: getComments(),
         builder: (context, snapshot) {

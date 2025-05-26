@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../model/movie.dart';
 import '../common/utils.dart';
-
 class FirebaseService {
   static final _auth = FirebaseAuth.instance;
   static final _database = FirebaseDatabase.instance.ref();
@@ -38,11 +37,43 @@ class FirebaseService {
     return favoritos;
   }
 
+  static Future<List<Movie>> getRecommendedMovies() async {
+    final user = _auth.currentUser;
+    if (user == null) return [];
+
+    final recomendadosRef = _database
+        .child('usuarios')
+        .child(user.uid)
+        .child('recomendados');
+
+    final snapshot = await recomendadosRef.get();
+
+    if (!snapshot.exists) return [];
+
+    List<Movie> recommendedMovies = [];
+
+    final data = snapshot.value as Map<dynamic, dynamic>;
+
+    data.forEach((key, value) {
+      final movie = Movie(
+        id: int.tryParse(key) ?? 0,
+        title: value['title'] ?? 'Sem título',
+        posterPath: value['poster'] ?? '',
+        overview: value['overview'] ?? '',
+        releaseDate: value['releaseDate'] ?? '',
+        voteAverage:
+            double.tryParse(value['voteAverage']?.toString() ?? '0') ?? 0.0,
+      );
+      recommendedMovies.add(movie);
+    });
+
+    return recommendedMovies;
+  }
+
   static String getImageUrl(String posterPath) {
     return '$baseImageMovie$posterPath';
   }
 
-  /// ✅ Salvar filme como favorito ou assistido
   static Future<void> saveMovieData({
     required Movie movie,
     required String category, // 'favoritos' ou 'assistidos'
@@ -73,7 +104,6 @@ class FirebaseService {
     await ref.remove();
   }
 
-  /// ✅ Salvar avaliação
   static Future<void> saveRating({
     required String movieTitle,
     required double rating,
@@ -85,7 +115,6 @@ class FirebaseService {
     await ref.set(rating);
   }
 
-  /// ✅ Adicionar comentário
   static Future<void> addComment(String comment) async {
     final user = _auth.currentUser;
     if (user == null) return;
@@ -117,52 +146,35 @@ class FirebaseService {
     return snapshot.exists;
   }
 
-static Future<void> addPublicComment({
-  required String movieId,
-  required String comment,
-}) async {
-  final ref = FirebaseDatabase.instance
-      .ref()
-      .child('comentarios')
-      .child(movieId)
-      .push();
-  await ref.set({
-    'comentario': comment,
-    'timestamp': ServerValue.timestamp,
-  });
-}
-
-
-
-static Future<List<String>> getPublicComments({required String movieId}) async {
-  final ref = FirebaseDatabase.instance
-      .ref()
-      .child('comentarios')
-      .child(movieId);
-  final snapshot = await ref.get();
-
-  if (snapshot.exists) {
-    final data = snapshot.value as Map;
-    return data.values
-        .map((e) => (e as Map)['comentario'] as String)
-        .toList();
-  } else {
-    return [];
+  static Future<void> addPublicComment({
+    required String movieId,
+    required String comment,
+  }) async {
+    final ref =
+        FirebaseDatabase.instance
+            .ref()
+            .child('comentarios')
+            .child(movieId)
+            .push();
+    await ref.set({'comentario': comment, 'timestamp': ServerValue.timestamp});
   }
-}
 
+  static Future<List<String>> getPublicComments({
+    required String movieId,
+  }) async {
+    final ref = FirebaseDatabase.instance
+        .ref()
+        .child('comentarios')
+        .child(movieId);
+    final snapshot = await ref.get();
 
-static Future<String> getCurrentUserName() async {
-  final user = FirebaseAuth.instance.currentUser;
-  final uid = user?.uid;
-  final ref = FirebaseDatabase.instance.ref().child('usuarios').child(uid!);
-  final snapshot = await ref.get();
-
-  if (snapshot.exists) {
-    final data = snapshot.value as Map;
-    return data['nome'] ?? 'Anônimo';
+    if (snapshot.exists) {
+      final data = snapshot.value as Map;
+      return data.values
+          .map((e) => (e as Map)['comentario'] as String)
+          .toList();
+    } else {
+      return [];
+    }
   }
-  return 'Anônimo';
-}
-
 }

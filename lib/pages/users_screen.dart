@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../common/utils.dart';
+
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
 
@@ -13,7 +14,9 @@ class _UsersScreenState extends State<UsersScreen> {
   List<Map<String, dynamic>> usuarios = [];
   bool isLoading = true;
 
-  final url = "$baseDatabaseUrl""/usuarios.json"; 
+  final url =
+      "$baseDatabaseUrl"
+      "/usuarios.json";
 
   @override
   void initState() {
@@ -63,23 +66,31 @@ class _UsersScreenState extends State<UsersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Usuários Cadastrados', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 25),),
+        title: const Text(
+          'Usuários',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : usuarios.isEmpty
+      body:
+          isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : usuarios.isEmpty
               ? const Center(child: Text('Nenhum usuário encontrado.'))
               : ListView.builder(
-                  itemCount: usuarios.length,
-                  itemBuilder: (context, index) {
-                    final usuario = usuarios[index];
-                    return ListTile(
-                      leading: const Icon(Icons.person),
-                      title: Text(usuario['nome'] ?? 'Sem nome'),
-                      subtitle: Text(usuario['email'] ?? 'Sem email'),
-                    );
-                  },
-                ),
+                itemCount: usuarios.length,
+                itemBuilder: (context, index) {
+                  final usuario = usuarios[index];
+                  return ListTile(
+                    leading: const Icon(Icons.person),
+                    title: Text(usuario['nome'] ?? 'Sem nome'),
+                    subtitle: Text(usuario['email'] ?? 'Sem email'),
+                  );
+                },
+              ),
     );
   }
 }

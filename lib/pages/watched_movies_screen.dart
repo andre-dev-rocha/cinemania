@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../model/movie.dart';
-import '../services/firebase_service.dart';
 import 'movie_detail_screen.dart';
-import '../services/movie_service.dart';
-import '../common/utils.dart';
 
 class WatchedMoviesScreen extends StatefulWidget {
   const WatchedMoviesScreen({super.key});
@@ -46,7 +43,16 @@ class _WatchedMoviesScreenState extends State<WatchedMoviesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Filmes Assistidos', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),)),
+      appBar: AppBar(
+        title: const Text(
+          'Filmes Assistidos',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
+      ),
       body: FutureBuilder<List<Movie>>(
         future: getWatchedMovies(),
         builder: (context, snapshot) {
@@ -74,7 +80,10 @@ class _WatchedMoviesScreenState extends State<WatchedMoviesScreen> {
                             width: 50,
                           )
                           : const Icon(Icons.movie),
-                  title: Text(movie.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                  title: Text(
+                    movie.title,
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
                   onTap: () {
                     Navigator.push(
                       context,

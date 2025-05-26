@@ -4,9 +4,9 @@ import 'package:cinemania/pages/movie_detail_screen.dart';
 import 'package:flutter/material.dart';
 import './drawer_screen.dart';
 import '../services/movie_service.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -14,8 +14,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _movieService = MovieService();
   final ScrollController _scrollController = ScrollController();
-
   final List<Movie> _filmes = [];
+
   int _paginaAtual = 1;
   bool _carregando = false;
   bool _temMais = true;
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       });
     } catch (e) {
-      print("Erro ao carregar filmes: $e");
+      print(e);
     } finally {
       setState(() {
         _carregando = false;
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Lançamentos",
+          "Em destaque",
           style: TextStyle(
             color: Colors.white,
             fontSize: 25,
@@ -80,12 +80,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         backgroundColor: Color.fromARGB(255, 7, 34, 59),
         actions: [
-          IconButton(onPressed: (){
-            Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => const SearchMovieScreen()),
-);
-          }, icon: Icon(Icons.search))
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchMovieScreen(),
+                ),
+              );
+            },
+            icon: Icon(Icons.search),
+          ),
         ],
       ),
       drawer: DrawerScreen(),
@@ -118,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MovieDetailScreen(movie: filme,),
+                      builder: (context) => MovieDetailScreen(movie: filme),
                     ),
                   );
                 },
