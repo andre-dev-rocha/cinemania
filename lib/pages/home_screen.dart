@@ -1,8 +1,9 @@
 import 'package:cinemania/model/movie.dart';
+import 'package:cinemania/pages/search_movie_screen.dart';
+import 'package:cinemania/pages/movie_detail_screen.dart';
 import 'package:flutter/material.dart';
 import './drawer_screen.dart';
 import '../services/movie_service.dart';
-import './movie_detail_screen.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -78,6 +79,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         backgroundColor: Color.fromARGB(255, 7, 34, 59),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => const SearchMovieScreen()),
+);
+          }, icon: Icon(Icons.search))
+        ],
       ),
       drawer: DrawerScreen(),
       body: GridView.builder(

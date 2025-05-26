@@ -6,6 +6,7 @@ import '../services/firebase_service.dart';
 import 'movie_detail_screen.dart';
 import '../services/movie_service.dart';
 import '../common/utils.dart';
+
 class WatchedMoviesScreen extends StatefulWidget {
   const WatchedMoviesScreen({super.key});
 
@@ -33,7 +34,8 @@ class _WatchedMoviesScreenState extends State<WatchedMoviesScreen> {
           title: movieData['title'] ?? '',
           posterPath: movieData['poster'] ?? '',
           overview: movieData['overview'] ?? '',
-          voteAverage: double.tryParse(movieData['voteAverage'].toString()) ?? 0.0,
+          voteAverage:
+              double.tryParse(movieData['voteAverage'].toString()) ?? 0.0,
           releaseDate: movieData['releaseDate'] ?? '',
         );
       }).toList();
@@ -44,7 +46,7 @@ class _WatchedMoviesScreenState extends State<WatchedMoviesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Filmes Assistidos')),
+      appBar: AppBar(title: const Text('Filmes Assistidos', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),)),
       body: FutureBuilder<List<Movie>>(
         future: getWatchedMovies(),
         builder: (context, snapshot) {
@@ -55,26 +57,33 @@ class _WatchedMoviesScreenState extends State<WatchedMoviesScreen> {
           if (movies.isEmpty) {
             return const Center(child: Text('Nenhum filme assistido.'));
           }
-          return ListView.builder(
+          return ListView.separated(
+            separatorBuilder:
+                (context, index) =>
+                    const Divider(height: 1, thickness: 1, color: Colors.black),
             itemCount: movies.length,
             itemBuilder: (context, index) {
               final movie = movies[index];
-              return ListTile(
-                leading: movie.posterPath.isNotEmpty
-                    ? Image.network(
-                        "https://image.tmdb.org/t/p/w500${movie.posterPath}",
-                        width: 50,
-                      )
-                    : const Icon(Icons.movie),
-                title: Text(movie.title),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MovieDetailScreen(movie: movie),
-                    ),
-                  );
-                },
+              return Padding(
+                padding: EdgeInsets.all(16),
+                child: ListTile(
+                  leading:
+                      movie.posterPath.isNotEmpty
+                          ? Image.network(
+                            "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                            width: 50,
+                          )
+                          : const Icon(Icons.movie),
+                  title: Text(movie.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MovieDetailScreen(movie: movie),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           );

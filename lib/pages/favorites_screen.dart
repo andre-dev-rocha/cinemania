@@ -39,37 +39,44 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           if (favorites.isEmpty) {
             return const Center(child: Text('Nenhum favorito ainda.'));
           }
-          return ListView.builder(
+          return ListView.separated(
             itemCount: favorites.length,
+            separatorBuilder:
+                (context, index) =>
+                    const Divider(height: 1, thickness: 1, color: Colors.black),
             itemBuilder: (context, index) {
               final movie = favorites[index];
-              return ListTile(
-                leading: movie.posterPath.isNotEmpty
-                    ? Image.network(
-                        FirebaseService.getImageUrl(movie.posterPath),
-                        width: 50,
-                      )
-                    : const Icon(Icons.movie),
-                title: Text(movie.title),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () async {
-                    await removeFavorite(movie.id);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('${movie.title} removido dos favoritos.'),
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading:
+                      movie.posterPath.isNotEmpty
+                          ? Image.network(
+                            FirebaseService.getImageUrl(movie.posterPath),
+                            width: 50,
+                          )
+                          : const Icon(Icons.movie),
+                  title: Text(movie.title),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () async {
+                      await removeFavorite(movie.id);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('${movie.title} removido dos favoritos.', ),
+                        ),
+                      );
+                    },
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MovieDetailScreen(movie: movie),
                       ),
                     );
                   },
                 ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MovieDetailScreen(movie: movie),
-                    ),
-                  );
-                },
               );
             },
           );

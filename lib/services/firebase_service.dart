@@ -101,4 +101,68 @@ class FirebaseService {
     comments.add(comment);
     await ref.set(comments);
   }
+
+  static Future<bool> isMovieInCategory({
+    required Movie movie,
+    required String category,
+  }) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return false;
+
+    final ref = FirebaseDatabase.instance.ref().child(
+      'usuarios/${user.uid}/$category/${movie.id}',
+    );
+    final snapshot = await ref.get();
+
+    return snapshot.exists;
+  }
+
+static Future<void> addPublicComment({
+  required String movieId,
+  required String comment,
+}) async {
+  final ref = FirebaseDatabase.instance
+      .ref()
+      .child('comentarios')
+      .child(movieId)
+      .push();
+  await ref.set({
+    'comentario': comment,
+    'timestamp': ServerValue.timestamp,
+  });
+}
+
+
+
+static Future<List<String>> getPublicComments({required String movieId}) async {
+  final ref = FirebaseDatabase.instance
+      .ref()
+      .child('comentarios')
+      .child(movieId);
+  final snapshot = await ref.get();
+
+  if (snapshot.exists) {
+    final data = snapshot.value as Map;
+    return data.values
+        .map((e) => (e as Map)['comentario'] as String)
+        .toList();
+  } else {
+    return [];
+  }
+}
+
+
+static Future<String> getCurrentUserName() async {
+  final user = FirebaseAuth.instance.currentUser;
+  final uid = user?.uid;
+  final ref = FirebaseDatabase.instance.ref().child('usuarios').child(uid!);
+  final snapshot = await ref.get();
+
+  if (snapshot.exists) {
+    final data = snapshot.value as Map;
+    return data['nome'] ?? 'Anônimo';
+  }
+  return 'Anônimo';
+}
+
 }
