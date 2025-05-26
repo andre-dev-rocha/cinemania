@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () => setFormAction(!isLogin),
-                  child: Text(toggleButton),
+                  child: Text(toggleButton, style: TextStyle(color: Colors.white),),
                 ),
               ],
             ),
