@@ -63,7 +63,7 @@ class _UsersScreenState extends State<UsersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Usuários Cadastrados'),
+        title: const Text('Usuários Cadastrados', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 25),),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

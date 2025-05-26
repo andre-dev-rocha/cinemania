@@ -23,7 +23,17 @@ class MeuApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey)
+        scaffoldBackgroundColor: Color.fromARGB(255, 88, 135, 179),
+        drawerTheme: DrawerThemeData(
+          backgroundColor: Colors.grey[300]
+        ),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 7, 34, 59),
+          iconTheme: IconThemeData(
+            color: Colors.white
+          )
+        )
       ),
       home: AuthCheck(),
       debugShowCheckedModeBanner: false,

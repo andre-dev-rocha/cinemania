@@ -25,6 +25,7 @@ class MovieService {
     }
   }
 
+  
   static String getImageUrl(String posterPath){
     if(posterPath.isEmpty) return '';
     return "$baseImageMovie$posterPath";

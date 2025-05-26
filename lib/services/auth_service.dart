@@ -60,7 +60,11 @@ class AuthService extends ChangeNotifier {
     await _dbRef.child("usuarios").child(uid).set({
       'id': uid,
       'nome': nome,
-      'email': email
+      'email': email,
+      "favoritos":[],
+      "notas":{},
+      "comentarios":{},
+      "assistidos":[]
     }
     );
   }

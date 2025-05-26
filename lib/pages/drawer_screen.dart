@@ -1,4 +1,8 @@
+import 'package:cinemania/pages/commentsScreeen.dart';
+import 'package:cinemania/pages/favorites_screen.dart';
+import 'package:cinemania/pages/ratings_screen.dart';
 import 'package:cinemania/pages/users_screen.dart';
+import 'package:cinemania/pages/watched_movies_screen.dart';
 import 'package:cinemania/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,20 +41,136 @@ class _DrawerScreenState extends State<DrawerScreen> {
               onTap:
                   () => Navigator.push(
                     context,
+                    MaterialPageRoute(builder: (context) => RatingsScreen()),
+                  ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Icon(Icons.star_half, color: Colors.black, size: 30),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      "Notas",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: GestureDetector(
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CommentsScreen()),
+                  ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Icon(Icons.comment, color: Colors.black, size: 30),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      "Comentários",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: GestureDetector(
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WatchedMoviesScreen()),
+                  ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Icon(Icons.visibility, color: Colors.black, size: 30),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      "Assistidos",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: GestureDetector(
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FavoritesScreen()),
+                  ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Icon(Icons.star, color: Colors.black, size: 30),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      "Favoritos",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: GestureDetector(
+              onTap:
+                  () => Navigator.push(
+                    context,
                     MaterialPageRoute(builder: (context) => UsersScreen()),
                   ),
               child: Row(
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Icon(Icons.people, color: Colors.green, size: 30),
+                    child: Icon(Icons.people, color: Colors.black, size: 30),
                   ),
                   Expanded(
                     flex: 5,
                     child: Text(
                       "Usuarios",
                       style: TextStyle(
-                        color: Colors.green,
+                        color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
